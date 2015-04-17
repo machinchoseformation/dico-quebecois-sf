@@ -8,7 +8,7 @@ use Doctrine\DBAL\Schema\Schema;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-class Version20150417141446 extends AbstractMigration
+class Version20150417152514 extends AbstractMigration
 {
     /**
      * @param Schema $schema
@@ -20,7 +20,7 @@ class Version20150417141446 extends AbstractMigration
 
         $this->addSql('CREATE TABLE Category (id INT AUTO_INCREMENT NOT NULL, name VARCHAR(50) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB');
         $this->addSql('CREATE TABLE Definition (id INT AUTO_INCREMENT NOT NULL, term_id INT DEFAULT NULL, content LONGTEXT NOT NULL, createdDate DATETIME NOT NULL, modifiedDate DATETIME NOT NULL, INDEX IDX_276D2C08E2C35FC (term_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB');
-        $this->addSql('CREATE TABLE Example (id INT AUTO_INCREMENT NOT NULL, term_id INT DEFAULT NULL, content LONGTEXT NOT NULL, translation LONGTEXT NOT NULL, createdDate DATETIME NOT NULL, modifiedDate DATETIME NOT NULL, INDEX IDX_A151A203E2C35FC (term_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB');
+        $this->addSql('CREATE TABLE Example (id INT AUTO_INCREMENT NOT NULL, term_id INT DEFAULT NULL, content LONGTEXT NOT NULL, translation LONGTEXT DEFAULT NULL, createdDate DATETIME NOT NULL, modifiedDate DATETIME NOT NULL, INDEX IDX_A151A203E2C35FC (term_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB');
         $this->addSql('CREATE TABLE Term (id INT AUTO_INCREMENT NOT NULL, category_id INT DEFAULT NULL, name VARCHAR(255) NOT NULL, variations VARCHAR(255) DEFAULT NULL, pronunciation VARCHAR(255) DEFAULT NULL, nature VARCHAR(50) DEFAULT NULL, gender VARCHAR(50) DEFAULT NULL, number VARCHAR(50) DEFAULT NULL, origin LONGTEXT DEFAULT NULL, createdDate DATETIME NOT NULL, modifiedDate DATETIME NOT NULL, votesCount INT NOT NULL, INDEX IDX_53D48B312469DE2 (category_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB');
         $this->addSql('CREATE TABLE TermHistory (id INT AUTO_INCREMENT NOT NULL, category_id INT DEFAULT NULL, name VARCHAR(255) NOT NULL, variations VARCHAR(255) DEFAULT NULL, pronunciation VARCHAR(255) DEFAULT NULL, nature VARCHAR(50) DEFAULT NULL, gender VARCHAR(50) DEFAULT NULL, number VARCHAR(50) DEFAULT NULL, origin LONGTEXT DEFAULT NULL, createdDate DATETIME NOT NULL, modifiedDate DATETIME NOT NULL, votesCount INT NOT NULL, type VARCHAR(50) NOT NULL, backupDate DATETIME NOT NULL, INDEX IDX_74FE18EE12469DE2 (category_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB');
         $this->addSql('ALTER TABLE Definition ADD CONSTRAINT FK_276D2C08E2C35FC FOREIGN KEY (term_id) REFERENCES Term (id)');
