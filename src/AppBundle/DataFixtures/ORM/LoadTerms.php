@@ -3,6 +3,7 @@
 namespace AppBundle\DataFixtures\ORM;
 
 use AppBundle\Entity\Category;
+use Cocur\Slugify\Slugify;
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use AppBundle\Entity\Term;
@@ -54,6 +55,9 @@ class LoadTerms implements FixtureInterface
                 $term = new Term();
                 $term->setName($cols[0]);
 
+                $slugify = new Slugify();
+                $slug = $slugify->slugify($term->getName());
+                $term->setSlug( $slug );
 
                 //the keys of the array are d,s,v or e...
                 $term->setCategory( $categsArray[$cols[3]] );
