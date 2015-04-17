@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>{% block title %}Wikébec | Dictionnaire de québécois participatif{% endblock %}
+        </title>
+
+        {% block stylesheets %}
+            {% stylesheets
+                'bootstrap-3.3.4-dist/css/bootstrap.min.css'
+                'css/*'
+                output='compiled/css/app.css'
+            %}
+                <link href="{{ asset_url }}" type="text/css" rel="stylesheet" />
+            {% endstylesheets %}
+        {% endblock %}
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+    </head>
+    <body>
+        <div class="container">
+            {% block body %}{% endblock %}
+        </div>
+        {% block javascripts %}
+            {% javascripts
+                'js/jquery-1.11.2.min.js'
+                'bootstrap-3.3.4-dist/js/bootstrap.min.js'
+                'js/*'
+            %}
+                <script src="{{ asset_url }}"></script>
+            {% endjavascripts %}
+        {% endblock %}
+    </body>
+</html>
