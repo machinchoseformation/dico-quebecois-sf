@@ -18,7 +18,14 @@
     </head>
     <body>
         <div class="container">
-            {% block body %}{% endblock %}
+            <div class="row">
+                <div class="col-xs-3">
+                    {{ render(controller('AppBundle:Default:dico')) }}
+                </div>
+                <div class="col-xs-9">
+                    {% block body %}{% endblock %}
+                </div>
+            </div>
         </div>
         {% block javascripts %}
             {% javascripts
