@@ -11,9 +11,8 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="AppBundle\Entity\TermRepository")
  */
-class Term extends AbstractTerm
+class TermHistory extends AbstractTerm
 {
-
     /**
      * @var ArrayCollection
      *
@@ -103,5 +102,4 @@ class Term extends AbstractTerm
     {
         return $this->examples;
     }
-
 }
