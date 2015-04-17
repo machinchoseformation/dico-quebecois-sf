@@ -4,10 +4,41 @@
 
 {% block body %}
     <h1>{{ term.name|capitalize }}</h1>
+    <p>
+
+        {# the dashes remove extra whitespace #}
+        {{- term.category.name -}}
+        {%- if term.nature -%}, {{ term.nature }}{%- endif -%}
+        {%- if term.gender -%}, {{ term.gender }}{%- endif -%}
+        {%- if term.number -%}, {{ term.number }}{%- endif -%}
+
     <h3>Définitions</h3>
     <ol>
     {% for def in term.definitions %}
         <li>{{ def.content }}</li>
     {% endfor %}
     </ol>
+    <h3>Exemples</h3>
+    <ol>
+        {% for example in term.examples %}
+            <li>{{ example.content }} : {{ example.translation }}</li>
+        {% endfor %}
+    </ol>
+
+    {% if term.pronunciation %}
+    <h3>Prononciation</h3>
+    <p>{{ term.pronunciation }}</p>
+    {% endif %}
+
+    {% if term.variations %}
+    <h3>Variantes sur le thème</h3>
+    <p>{{ term.variations }}</p>
+    {% endif %}
+
+    {% if term.origin %}
+    <h3>Origine</h3>
+    <p>{{ term.origin }}</p>
+    {% endif %}
+
+    <div class="votesCount">{{ term.votesCount }} votes pour cette entrée !</div>
 {% endblock %}
