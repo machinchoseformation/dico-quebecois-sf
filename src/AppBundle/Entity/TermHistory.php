@@ -44,6 +44,14 @@ class TermHistory extends AbstractTerm
     private $backupDate;
 
     /**
+     * @var Category
+     *
+     * @ORM\ManyToOne(targetEntity="Category", inversedBy="terms")
+     */
+    private $category;
+
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -152,4 +160,19 @@ class TermHistory extends AbstractTerm
     }
 
 
+    /**
+     * @return Category
+     */
+    public function getCategory()
+    {
+        return $this->category;
+    }
+
+    /**
+     * @param Category $category
+     */
+    public function setCategory($category)
+    {
+        $this->category = $category;
+    }
 }

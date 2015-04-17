@@ -28,6 +28,13 @@ class Term extends AbstractTerm
      */
     private $examples;
 
+    /**
+     * @var Category
+     *
+     * @ORM\ManyToOne(targetEntity="Category", inversedBy="terms")
+     */
+    private $category;
+
 
     /**
      * Constructor
@@ -102,6 +109,23 @@ class Term extends AbstractTerm
     public function getExamples()
     {
         return $this->examples;
+    }
+
+
+    /**
+     * @return Category
+     */
+    public function getCategory()
+    {
+        return $this->category;
+    }
+
+    /**
+     * @param Category $category
+     */
+    public function setCategory($category)
+    {
+        $this->category = $category;
     }
 
 }

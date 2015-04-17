@@ -31,42 +31,42 @@ abstract class AbstractTerm
     /**
      * @var string
      *
-     * @ORM\Column(name="variations", type="string", length=255)
+     * @ORM\Column(name="variations", type="string", length=255, nullable=true)
      */
     private $variations;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="pronunciation", type="string", length=255)
+     * @ORM\Column(name="pronunciation", type="string", length=255, nullable=true)
      */
     private $pronunciation;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="nature", type="string", length=50)
+     * @ORM\Column(name="nature", type="string", length=50, nullable=true)
      */
     private $nature;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="gender", type="string", length=50)
+     * @ORM\Column(name="gender", type="string", length=50, nullable=true)
      */
     private $gender;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="number", type="string", length=50)
+     * @ORM\Column(name="number", type="string", length=50, nullable=true)
      */
     private $number;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="origin", type="text")
+     * @ORM\Column(name="origin", type="text", nullable=true)
      */
     private $origin;
 
@@ -333,5 +333,8 @@ abstract class AbstractTerm
     {
         return $this->votesCount;
     }
+
+
+
 
 }
