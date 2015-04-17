@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Term
  *
+ * @ORM\HasLifeCycleCallbacks()
  * @ORM\MappedSuperclass
  */
 abstract class AbstractTerm
@@ -92,6 +93,30 @@ abstract class AbstractTerm
     private $votesCount;
 
 
+
+
+
+    /**
+     * @ORM\PrePersist()
+     */
+    public function prePersist()
+    {
+        if (!$this->getCreatedDate()){
+            $this->setCreatedDate(new \DateTime());
+        }
+        if (!$this->getModifiedDate()){
+            $this->setModifiedDate(new \DateTime());
+        }
+    }
+
+
+    /**
+     * @ORM\PreUpdate()
+     */
+    public function preUpdate()
+    {
+        $this->setModifiedDate(new \DateTime());
+    }
 
 
     /**

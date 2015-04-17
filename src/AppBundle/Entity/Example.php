@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Example
  *
  * @ORM\Table()
+ * @ORM\HasLifeCycleCallbacks()
  * @ORM\Entity(repositoryClass="AppBundle\Entity\ExampleRepository")
  */
 class Example
@@ -31,7 +32,7 @@ class Example
     /**
      * @var string
      *
-     * @ORM\Column(name="translation", type="text")
+     * @ORM\Column(name="translation", type="text", nullable=true)
      */
     private $translation;
 
@@ -55,6 +56,30 @@ class Example
      * @ORM\ManyToOne(targetEntity="Term", inversedBy="examples")
      */
     private $term;
+
+
+    /**
+     * @ORM\PrePersist()
+     */
+    public function prePersist()
+    {
+        if (!$this->getCreatedDate()){
+            $this->setCreatedDate(new \DateTime());
+        }
+        if (!$this->getModifiedDate()){
+            $this->setModifiedDate(new \DateTime());
+        }
+    }
+
+
+    /**
+     * @ORM\PreUpdate()
+     */
+    public function preUpdate()
+    {
+        $this->setModifiedDate(new \DateTime());
+    }
+
 
     /**
      * Get id

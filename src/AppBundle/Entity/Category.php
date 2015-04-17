@@ -36,6 +36,8 @@ class Category
     private $terms;
 
 
+
+
     /**
      * Get id
      *
@@ -68,11 +70,13 @@ class Category
     {
         return $this->name;
     }
+
     /**
      * Constructor
      */
-    public function __construct()
+    public function __construct($name = null)
     {
+        $this->setName($name);
         $this->terms = new \Doctrine\Common\Collections\ArrayCollection();
     }
 

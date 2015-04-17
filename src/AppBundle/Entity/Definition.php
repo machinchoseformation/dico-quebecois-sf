@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Definition
  *
  * @ORM\Table()
+ * @ORM\HasLifeCycleCallbacks()
  * @ORM\Entity(repositoryClass="AppBundle\Entity\DefinitionRepository")
  */
 class Definition
@@ -48,6 +49,29 @@ class Definition
      * @ORM\ManyToOne(targetEntity="Term", inversedBy="definitions")
      */
     private $term;
+
+
+    /**
+     * @ORM\PrePersist()
+     */
+    public function prePersist()
+    {
+        if (!$this->getCreatedDate()){
+            $this->setCreatedDate(new \DateTime());
+        }
+        if (!$this->getModifiedDate()){
+            $this->setModifiedDate(new \DateTime());
+        }
+    }
+
+
+    /**
+     * @ORM\PreUpdate()
+     */
+    public function preUpdate()
+    {
+        $this->setModifiedDate(new \DateTime());
+    }
 
 
     /**
