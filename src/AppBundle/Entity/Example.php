@@ -49,6 +49,12 @@ class Example
      */
     private $modifiedDate;
 
+    /**
+     * @var Term
+     *
+     * @ORM\ManyToOne(targetEntity="Term", inversedBy="examples")
+     */
+    private $term;
 
     /**
      * Get id
@@ -150,5 +156,28 @@ class Example
     public function getModifiedDate()
     {
         return $this->modifiedDate;
+    }
+
+    /**
+     * Set term
+     *
+     * @param \AppBundle\Entity\Term $term
+     * @return Example
+     */
+    public function setTerm(\AppBundle\Entity\Term $term = null)
+    {
+        $this->term = $term;
+
+        return $this;
+    }
+
+    /**
+     * Get term
+     *
+     * @return \AppBundle\Entity\Term 
+     */
+    public function getTerm()
+    {
+        return $this->term;
     }
 }
