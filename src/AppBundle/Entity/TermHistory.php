@@ -20,6 +20,7 @@ class TermHistory extends AbstractTerm
      */
     private $definitions;
 
+
     /**
      * @var ArrayCollection
      *
@@ -27,6 +28,20 @@ class TermHistory extends AbstractTerm
      */
     private $examples;
 
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="type", type="string", length=50)
+     */
+    private $type;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="backupDate", type="datetime")
+     */
+    private $backupDate;
 
     /**
      * Constructor
@@ -102,4 +117,39 @@ class TermHistory extends AbstractTerm
     {
         return $this->examples;
     }
+
+
+    /**
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * @param string $type
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getBackupDate()
+    {
+        return $this->backupDate;
+    }
+
+    /**
+     * @param \DateTime $backupDate
+     */
+    public function setBackupDate($backupDate)
+    {
+        $this->backupDate = $backupDate;
+    }
+
+
 }
