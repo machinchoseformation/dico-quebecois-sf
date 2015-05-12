@@ -20,14 +20,14 @@ class Term extends AbstractTerm
     /**
      * @var ArrayCollection
      *
-     * @ORM\OneToMany(targetEntity="Definition", mappedBy="term", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="Definition", mappedBy="term", cascade={"persist", "remove"})
      */
     private $definitions;
 
     /**
      * @var ArrayCollection
      *
-     * @ORM\OneToMany(targetEntity="Example", mappedBy="term", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="Example", mappedBy="term", cascade={"persist", "remove"})
      */
     private $examples;
 

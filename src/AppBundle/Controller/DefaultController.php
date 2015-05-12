@@ -17,16 +17,6 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/{slug}/definition", name="term")
-     */
-    public function termAction(Term $term)
-    {
-        $params = array();
-        $params['term'] = $term;
-        return $this->render('default/term.html.twig', $params);
-    }
-
-    /**
      * @Route("/dico", name="dico")
      */
     public function dicoAction()

@@ -14,7 +14,9 @@ parameters:
     mailer_user:       ~
     mailer_password:   ~
 
-    locale:            en
+    locale:            fr
 
     # A secret key that's used to generate certain security-related tokens
     secret:            ThisTokenIsNotSoSecretChangeIt
+    recaptcha_public_key: 6Le4vAYTAAAAAE5VR9VRHcZrJ0lkA_L7lfhUp2dE
+    recaptcha_private_key: 6Le4vAYTAAAAAK_zPx4LAjuxnaX3Lc8UE_YMI15z

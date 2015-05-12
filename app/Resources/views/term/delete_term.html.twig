@@ -1,0 +1,7 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Effacer le terme {{ term.name }} | Wikébec{% endblock %}
+
+{% block body %}
+    {{ form(deleteForm, {attr:{'novalidate':'novalidate'}}) }}
+{% endblock %}

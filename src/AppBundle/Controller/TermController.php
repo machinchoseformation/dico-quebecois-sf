@@ -10,17 +10,53 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use AppBundle\Form\TermType;
+use AppBundle\Form\DeleteTermType;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Class TermController
  * @package AppBundle\Controller
- * @Route("/terme")
  */
-class TermController extends Controller {
+class TermController extends Controller
+{
 
     /**
-     * @Route("/ajout", name="addTerm")
+     * @Route("/{slug}/definition", name="showTerm")
+     */
+    public function showTermAction(Term $term)
+    {
+        return $this->render('term/show_term.html.twig', compact("term"));
+    }
+
+
+    /**
+     * @Route("/terme/suppression/{slug}", name="deleteTerm")
+     */
+    public function deleteTerm(Request $request, Term $term)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $deleteForm = $this->createForm(new DeleteTermType(), $term);
+        $deleteForm->handleRequest($request);
+        if ($deleteForm->isValid()){
+
+            $em->remove($term);
+            $em->flush();
+
+            $this->addFlash('success', 'Terme effacé !');
+            return $this->redirectToRoute('home');
+        }
+
+        $params = array(
+            "term" => $term,
+            "deleteForm" => $deleteForm->createView()
+        );
+        return $this->render('term/delete_term.html.twig', $params);
+    }
+
+
+    /**
+     * @Route("/terme/ajout", name="addTerm")
      */
     public function addTermAction(Request $request)
     {
@@ -35,9 +71,7 @@ class TermController extends Controller {
         $term->addExample($emptyExample);
 
         $termForm = $this->createForm(new TermType(), $term);
-
         $termForm->handleRequest($request);
-
         if ($termForm->isValid()){
 
             $slugify = new Slugify();
@@ -48,10 +82,8 @@ class TermController extends Controller {
             $em->flush();
 
             $this->addFlash('success', 'Nouveau terme enregistré !');
-            return $this->redirectToRoute('term', array('slug' => $slug));
+            return $this->redirectToRoute('showTerm', array('slug' => $slug));
         }
-
-        dump($term);
 
         $params = array(
             "termForm" => $termForm->createView()
@@ -60,13 +92,14 @@ class TermController extends Controller {
     }
 
     /**
-     * @Route("/modification/{slug}", name="editTerm")
+     * @Route("/terme/modification/{slug}", name="editTerm")
      */
     public function editTermAction(Request $request, Term $term)
     {
 
         $em = $this->getDoctrine()->getManager();
 
+        //add definitions and example field if none...
         if (count($term->getDefinitions()) < 1){
             $emptyDefinition = new Definition();
             $term->addDefinition($emptyDefinition);
@@ -78,9 +111,7 @@ class TermController extends Controller {
         }
 
         $termForm = $this->createForm(new TermType(), $term);
-
         $termForm->handleRequest($request);
-
         if ($termForm->isValid()){
 
             $slugify = new Slugify();
@@ -91,10 +122,8 @@ class TermController extends Controller {
             $em->flush();
 
             $this->addFlash('success', 'Terme enregistré !');
-            return $this->redirectToRoute('term', array('slug' => $slug));
+            return $this->redirectToRoute('showTerm', array('slug' => $slug));
         }
-
-        dump($term);
 
         $params = array(
             "term" => $term,

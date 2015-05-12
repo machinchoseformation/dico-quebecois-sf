@@ -5,6 +5,8 @@ namespace AppBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use EWZ\Bundle\RecaptchaBundle\Validator\Constraints\True;
+
 
 class TermType extends AbstractType
 {
@@ -68,6 +70,12 @@ class TermType extends AbstractType
             ))
             ->add('origin', null, array(
                 'label' => 'Origine du terme, étimologie'
+            ))
+            ->add('recaptcha', 'ewz_recaptcha', array(
+                'mapped'      => false,
+                'constraints' => array(
+                    new True()
+                )
             ))
             ->add('Enregistrer', 'submit', array(
                 'attr' => array(

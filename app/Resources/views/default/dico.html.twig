@@ -1,5 +1,5 @@
 <ul>
 {% for term in dico %}
-    <li><a href="{{ path('term', {'slug':term.slug}) }}" title="{{ term.name }} | Défintion">{{ term.name|capitalize }}</a></li>
+    <li><a href="{{ path('showTerm', {'slug':term.slug}) }}" title="{{ term.name }} | Défintion">{{ term.name|capitalize }}</a></li>
 {% endfor %}
 </ul>
