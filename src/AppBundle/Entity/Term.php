@@ -4,6 +4,8 @@ namespace AppBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * Term
@@ -17,20 +19,23 @@ class Term extends AbstractTerm
     /**
      * @var ArrayCollection
      *
-     * @ORM\OneToMany(targetEntity="Definition", mappedBy="term")
+     * @Assert\Valid
+     * @ORM\OneToMany(targetEntity="Definition", mappedBy="term", cascade={"persist"})
      */
     private $definitions;
 
     /**
      * @var ArrayCollection
      *
-     * @ORM\OneToMany(targetEntity="Example", mappedBy="term")
+     * @Assert\Valid
+     * @ORM\OneToMany(targetEntity="Example", mappedBy="term", cascade={"persist"})
      */
     private $examples;
 
     /**
      * @var Category
      *
+     * @Assert\NotBlank()
      * @ORM\ManyToOne(targetEntity="Category", inversedBy="terms")
      */
     private $category;

@@ -3,6 +3,8 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * Definition
@@ -25,6 +27,7 @@ class Definition
     /**
      * @var string
      *
+     * @Assert\NotBlank()
      * @ORM\Column(name="content", type="text")
      */
     private $content;
@@ -178,6 +181,6 @@ class Definition
 
     public function __toString()
     {
-        return $this->getContent();
+        return $this->content;
     }
 }

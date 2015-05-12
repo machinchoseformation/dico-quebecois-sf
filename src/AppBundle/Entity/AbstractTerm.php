@@ -4,10 +4,14 @@ namespace AppBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * Term
  *
+ * @UniqueEntity("slug")
+ * @UniqueEntity("name")
  * @ORM\HasLifeCycleCallbacks()
  * @ORM\MappedSuperclass
  */
@@ -32,6 +36,7 @@ abstract class AbstractTerm
     /**
      * @var string
      *
+     * @Assert\NotBlank(message="Veuillez renseigner un terme !")
      * @ORM\Column(name="name", type="string", length=255)
      */
     private $name;
@@ -113,6 +118,9 @@ abstract class AbstractTerm
         }
         if (!$this->getModifiedDate()){
             $this->setModifiedDate(new \DateTime());
+        }
+        if (!$this->getVotesCount()){
+            $this->setVotesCount(0);
         }
     }
 

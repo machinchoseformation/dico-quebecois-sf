@@ -10,6 +10,7 @@
                 'bootstrap-3.3.4-dist/css/bootstrap.min.css'
                 'css/*'
                 output='compiled/css/app.css'
+                filter='cssrewrite'
             %}
                 <link href="{{ asset_url }}" type="text/css" rel="stylesheet" />
             {% endstylesheets %}
@@ -29,6 +30,13 @@
                             <li><a href="{{ path('addTerm') }}" title="Ajouter un terme au dictionnaire">Contribuer</a></li>
                         </ul>
                     </nav>
+                    {% for label, flashes in app.session.flashbag.all %}
+                        {% for flash in flashes %}
+                            <div class="alert alert-{{ label }}">
+                                {{ flash }}
+                            </div>
+                        {% endfor %}
+                    {% endfor %}
                     {% block body %}{% endblock %}
                 </div>
             </div>

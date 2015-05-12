@@ -20,11 +20,11 @@ class TermType extends AbstractType
             ))
             ->add('definitions', 'collection', array(
                 'allow_add' => true,
-                'type' => new DefinitionType(),
+                'type' => new DefinitionType()
             ))
             ->add('examples', 'collection', array(
                 'allow_add' => true,
-                'type' => new ExampleType(),
+                'type' => new ExampleType()
             ))
             ->add('variations', null, array(
                 'label' => 'Variation sur le thème'
@@ -69,7 +69,11 @@ class TermType extends AbstractType
             ->add('origin', null, array(
                 'label' => 'Origine du terme, étimologie'
             ))
-            ->add('Enregistrer', 'submit')
+            ->add('Enregistrer', 'submit', array(
+                'attr' => array(
+                    'class' => 'btn btn-info'
+                )
+            ))
         ;
     }
     

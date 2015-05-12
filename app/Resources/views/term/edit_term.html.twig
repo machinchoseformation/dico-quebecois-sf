@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Ajouter un terme | Wikébec{% endblock %}
+{% block title %}Modifier le terme {{ term.name }} | Wikébec{% endblock %}
 
 {% block body %}
     {{ form(termForm, {attr:{'novalidate':'novalidate'}}) }}
