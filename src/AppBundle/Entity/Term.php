@@ -46,14 +46,15 @@ class Term extends AbstractTerm
     }
 
     /**
-     * Add definitions
+     * Add definition
      *
-     * @param \AppBundle\Entity\Definition $definitions
+     * @param \AppBundle\Entity\Definition $definition
      * @return Term
      */
-    public function addDefinition(\AppBundle\Entity\Definition $definitions)
+    public function addDefinition(\AppBundle\Entity\Definition $definition)
     {
-        $this->definitions[] = $definitions;
+        $this->definitions[] = $definition;
+        $definition->setTerm($this);
 
         return $this;
     }

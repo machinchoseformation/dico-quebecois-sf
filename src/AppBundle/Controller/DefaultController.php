@@ -36,4 +36,5 @@ class DefaultController extends Controller
         $params = array("dico" => $dico);
         return $this->render('default/dico.html.twig', $params);
     }
+
 }

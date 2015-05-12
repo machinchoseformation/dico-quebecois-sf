@@ -112,4 +112,10 @@ class Category
     {
         return $this->terms;
     }
+
+
+    public function __toString()
+    {
+        return $this->getName();
+    }
 }

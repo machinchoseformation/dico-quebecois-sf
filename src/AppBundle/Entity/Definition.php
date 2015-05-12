@@ -175,4 +175,9 @@ class Definition
     {
         return $this->term;
     }
+
+    public function __toString()
+    {
+        return $this->getContent();
+    }
 }
