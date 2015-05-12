@@ -20,7 +20,7 @@ class TermType extends AbstractType
             ))
             ->add('definitions', 'collection', array(
                 'allow_add' => true,
-                'type' => new DefinitionType()
+                'type' => new DefinitionType(),
             ))
             ->add('examples', 'collection', array(
                 'allow_add' => true,

@@ -5,6 +5,7 @@ namespace AppBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 
 /**
@@ -19,7 +20,6 @@ class Term extends AbstractTerm
     /**
      * @var ArrayCollection
      *
-     * @Assert\Valid
      * @ORM\OneToMany(targetEntity="Definition", mappedBy="term", cascade={"persist"})
      */
     private $definitions;
@@ -27,7 +27,6 @@ class Term extends AbstractTerm
     /**
      * @var ArrayCollection
      *
-     * @Assert\Valid
      * @ORM\OneToMany(targetEntity="Example", mappedBy="term", cascade={"persist"})
      */
     private $examples;
@@ -40,6 +39,46 @@ class Term extends AbstractTerm
      */
     private $category;
 
+    /**
+     * @Assert\Callback()
+     */
+    public function validateDefinitions(ExecutionContextInterface $context)
+    {
+        //remove empty definitions first
+        foreach($this->getDefinitions() as $def){
+            if ($def->getContent() == ""){
+                $this->removeDefinition($def);
+            }
+        }
+
+        if (count($this->getDefinitions()) < 1){
+            $context->buildViolation('Veuillez ajouter au moins une définition !')
+                ->atPath('definitions')
+                ->addViolation();
+        }
+    }
+
+
+    /**
+     * @Assert\Callback()
+     */
+    public function validateExamples(ExecutionContextInterface $context)
+    {
+        //remove empty examples first
+        foreach($this->getExamples() as $ex){
+            if ($ex->getContent() == ""){
+                $this->removeExample($ex);
+            }
+        }
+
+        foreach($this->getExamples() as $ex){
+            if ($ex->getTranslation() == ""){
+                $context->buildViolation('Veuillez traduire vos exemples !')
+                    ->atPath('examples')
+                    ->addViolation();
+            }
+        }
+    }
 
     /**
      * Constructor
@@ -85,14 +124,15 @@ class Term extends AbstractTerm
     }
 
     /**
-     * Add examples
+     * Add example
      *
-     * @param \AppBundle\Entity\Example $examples
+     * @param \AppBundle\Entity\Example $example
      * @return Term
      */
-    public function addExample(\AppBundle\Entity\Example $examples)
+    public function addExample(\AppBundle\Entity\Example $example)
     {
-        $this->examples[] = $examples;
+        $this->examples[] = $example;
+        $example->setTerm($this);
 
         return $this;
     }
