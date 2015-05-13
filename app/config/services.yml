@@ -12,7 +12,7 @@ services:
 
     term_alteration_listener:
         class: AppBundle\EventListener\TermAlterationListener
-        arguments: ["@doctrine", "@admin_notifier"]
+        arguments: ["@doctrine", "@admin_notifier", "@request_stack", "@session"]
         tags:
             - { name: kernel.event_listener, event: term_alteration, method: onTermAlteration }
 

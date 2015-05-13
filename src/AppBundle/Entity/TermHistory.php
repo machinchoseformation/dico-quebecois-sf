@@ -29,6 +29,20 @@ class TermHistory extends AbstractTerm
     private $backupDate;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="ip", type="string", length=255)
+     */
+    private $ip;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="email", type="string", length=255)
+     */
+    private $email;
+
+    /**
      * @var Category
      *
      * @ORM\Column(name="serializedCategory", type="object")
@@ -57,6 +71,7 @@ class TermHistory extends AbstractTerm
     {
 
         $this->setType($type);
+
 
         //not elegant, but casting with inheritance is a bitch
         $this->setName( $term->getName() );
@@ -179,5 +194,51 @@ class TermHistory extends AbstractTerm
     public function getSerializedExamples()
     {
         return $this->serializedExamples;
+    }
+
+    /**
+     * Set ip
+     *
+     * @param string $ip
+     * @return TermHistory
+     */
+    public function setIp($ip)
+    {
+        $this->ip = $ip;
+
+        return $this;
+    }
+
+    /**
+     * Get ip
+     *
+     * @return string 
+     */
+    public function getIp()
+    {
+        return $this->ip;
+    }
+
+    /**
+     * Set email
+     *
+     * @param string $email
+     * @return TermHistory
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    /**
+     * Get email
+     *
+     * @return string 
+     */
+    public function getEmail()
+    {
+        return $this->email;
     }
 }
