@@ -7,9 +7,12 @@ use AppBundle\Entity\Term;
 use AppBundle\Entity\Definition;
 use AppBundle\Entity\TermHistory;
 use AppBundle\Entity\TermVote;
+use AppBundle\Event\TermAlterationEvent;
 use Cocur\Slugify\Slugify;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+
+use Symfony\Component\EventDispatcher\EventDispatcher;
 
 use AppBundle\Form\TermType;
 use AppBundle\Form\DeleteTermType;
@@ -42,9 +45,7 @@ class TermController extends Controller
         $deleteForm->handleRequest($request);
         if ($deleteForm->isValid()){
 
-            //backup
-            $termHistory = new TermHistory($term, "delete");
-            $em->persist($termHistory);
+            $this->dispatchAlterationEvent($term, "delete");
 
             $em->remove($term);
             $em->flush();
@@ -80,15 +81,13 @@ class TermController extends Controller
         $termForm->handleRequest($request);
         if ($termForm->isValid()){
 
-            $slugify = new Slugify();
-            $slug = $slugify->slugify($term->getName());
-            $term->setSlug( $slug );
+            $this->dispatchAlterationEvent($term, "add");
 
             $em->persist($term);
             $em->flush();
 
             $this->addFlash('success', 'Nouveau terme enregistré !');
-            return $this->redirectToRoute('showTerm', array('slug' => $slug));
+            return $this->redirectToRoute('showTerm', array('slug' => $term->getSlug()));
         }
 
         $params = array(
@@ -120,19 +119,13 @@ class TermController extends Controller
         $termForm->handleRequest($request);
         if ($termForm->isValid()){
 
-            $slugify = new Slugify();
-            $slug = $slugify->slugify($term->getName());
-            $term->setSlug( $slug );
-
-            //backup
-            $termHistory = new TermHistory($term, "edit");
-            $em->persist($termHistory);
+            $this->dispatchAlterationEvent($term, "edit");
 
             $em->persist($term);
             $em->flush();
 
             $this->addFlash('success', 'Terme enregistré !');
-            return $this->redirectToRoute('showTerm', array('slug' => $slug));
+            return $this->redirectToRoute('showTerm', array('slug' => $term->getSlug()));
         }
 
         $params = array(
@@ -169,5 +162,12 @@ class TermController extends Controller
         }
 
         return $this->redirectToRoute("showTerm", array("slug" => $term->getSlug()));
+    }
+
+    protected function dispatchAlterationEvent($term, $type)
+    {
+        $termAlterationEvent = new TermAlterationEvent($term, $type);
+        $eventDispatcher = $this->get('event_dispatcher');
+        $eventDispatcher->dispatch("term_alteration", $termAlterationEvent);
     }
 } 
