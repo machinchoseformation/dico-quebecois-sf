@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Example;
 use AppBundle\Entity\Term;
 use AppBundle\Entity\Definition;
+use AppBundle\Entity\TermHistory;
 use AppBundle\Entity\TermVote;
 use Cocur\Slugify\Slugify;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -40,6 +41,10 @@ class TermController extends Controller
         $deleteForm = $this->createForm(new DeleteTermType(), $term);
         $deleteForm->handleRequest($request);
         if ($deleteForm->isValid()){
+
+            //backup
+            $termHistory = new TermHistory($term, "delete");
+            $em->persist($termHistory);
 
             $em->remove($term);
             $em->flush();

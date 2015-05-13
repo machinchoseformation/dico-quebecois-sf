@@ -107,7 +107,6 @@ abstract class AbstractTerm
 
 
 
-
     /**
      * @ORM\PrePersist()
      */
@@ -389,5 +388,5 @@ abstract class AbstractTerm
     {
         $this->slug = $slug;
     }
-
+    
 }

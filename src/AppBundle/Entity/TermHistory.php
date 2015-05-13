@@ -13,21 +13,6 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class TermHistory extends AbstractTerm
 {
-    /**
-     * @var ArrayCollection
-     *
-     * @ORM\OneToMany(targetEntity="Definition", mappedBy="term")
-     */
-    private $definitions;
-
-
-    /**
-     * @var ArrayCollection
-     *
-     * @ORM\OneToMany(targetEntity="Example", mappedBy="term")
-     */
-    private $examples;
-
 
     /**
      * @var string
@@ -46,84 +31,51 @@ class TermHistory extends AbstractTerm
     /**
      * @var Category
      *
-     * @ORM\ManyToOne(targetEntity="Category", inversedBy="terms")
+     * @ORM\Column(name="serializedCategory", type="object")
      */
-    private $category;
+    private $serializedCategory;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="jsonDefinitions", type="object")
+     */
+    private $jsonDefinitions;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="jsonExamples", type="object")
+     */
+    private $jsonExamples;
 
 
     /**
      * Constructor
      */
-    public function __construct()
+    public function __construct(Term $term, $type = null)
     {
-        $this->definitions = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->examples = new \Doctrine\Common\Collections\ArrayCollection();
-    }
 
-    /**
-     * Add definitions
-     *
-     * @param \AppBundle\Entity\Definition $definitions
-     * @return Term
-     */
-    public function addDefinition(\AppBundle\Entity\Definition $definitions)
-    {
-        $this->definitions[] = $definitions;
+        $this->setType($type);
 
-        return $this;
-    }
+        //not elegant, but casting with inheritance is a bitch
+        $this->setName( $term->getName() );
+        $this->setSlug( $term->getSlug() );
+        $this->setVariations( $term->getVariations() );
+        $this->setPronunciation( $term->getPronunciation() );
+        $this->setNature( $term->getNature() );
+        $this->setGender( $term->getGender() );
+        $this->setNumber( $term->getNumber() );
+        $this->setOrigin( $term->getOrigin() );
+        $this->setCreatedDate( $term->getCreatedDate() );
+        $this->setModifiedDate( $term->getModifiedDate() );
+        $this->setVotesCount( $term->getVotesCount() );
 
-    /**
-     * Remove definitions
-     *
-     * @param \AppBundle\Entity\Definition $definitions
-     */
-    public function removeDefinition(\AppBundle\Entity\Definition $definitions)
-    {
-        $this->definitions->removeElement($definitions);
-    }
+        $this->setBackupDate(new \DateTime());
+        $this->setJsonDefinitions( $term->getDefinitions() );
+        $this->setJsonExamples( $term->getExamples() );
+        $this->setSerializedCategory( $term->getCategory() );
 
-    /**
-     * Get definitions
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getDefinitions()
-    {
-        return $this->definitions;
-    }
-
-    /**
-     * Add examples
-     *
-     * @param \AppBundle\Entity\Example $examples
-     * @return Term
-     */
-    public function addExample(\AppBundle\Entity\Example $examples)
-    {
-        $this->examples[] = $examples;
-
-        return $this;
-    }
-
-    /**
-     * Remove examples
-     *
-     * @param \AppBundle\Entity\Example $examples
-     */
-    public function removeExample(\AppBundle\Entity\Example $examples)
-    {
-        $this->examples->removeElement($examples);
-    }
-
-    /**
-     * Get examples
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getExamples()
-    {
-        return $this->examples;
     }
 
 
@@ -161,18 +113,71 @@ class TermHistory extends AbstractTerm
 
 
     /**
-     * @return Category
+     * Set serializedCategory
+     *
+     * @param \stdClass $serializedCategory
+     * @return TermHistory
      */
-    public function getCategory()
+    public function setSerializedCategory($serializedCategory)
     {
-        return $this->category;
+        $this->serializedCategory = $serializedCategory;
+
+        return $this;
     }
 
     /**
-     * @param Category $category
+     * Get serializedCategory
+     *
+     * @return \stdClass 
      */
-    public function setCategory($category)
+    public function getSerializedCategory()
     {
-        $this->category = $category;
+        return $this->serializedCategory;
+    }
+
+    /**
+     * Set jsonDefinitions
+     *
+     * @param array $jsonDefinitions
+     * @return TermHistory
+     */
+    public function setJsonDefinitions($jsonDefinitions)
+    {
+        $this->jsonDefinitions = $jsonDefinitions;
+
+        return $this;
+    }
+
+    /**
+     * Get jsonDefinitions
+     *
+     * @return array 
+     */
+    public function getJsonDefinitions()
+    {
+        return $this->jsonDefinitions;
+    }
+
+    /**
+     * Set jsonExamples
+     *
+     * @param array $jsonExamples
+     * @return TermHistory
+     */
+    public function setJsonExamples($jsonExamples)
+    {
+        $this->jsonExamples = $jsonExamples;
+
+        return $this;
+    }
+
+    /**
+     * Get jsonExamples
+     *
+     * @return array 
+     */
+    public function getJsonExamples()
+    {
+        return $this->jsonExamples;
     }
 }
