@@ -1,5 +1,5 @@
-<ul>
+<ol class="list-unstyled" id="dico">
 {% for term in dico %}
-    <li><a href="{{ path('showTerm', {'slug':term.slug}) }}" title="{{ term.name }} | Défintion">{{ term.name|capitalize }}</a></li>
+    <li><a data-cat="{{ term.category.name[:1]|lower }}" href="{{ path('showTerm', {'slug':term.slug}) }}" title="{{ term.name }} | Défintion">{{ term.name|capitalize }}</a></li>
 {% endfor %}
-</ul>
+</ol>
