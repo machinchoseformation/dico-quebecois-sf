@@ -124,6 +124,10 @@ class TermController extends Controller
             $slug = $slugify->slugify($term->getName());
             $term->setSlug( $slug );
 
+            //backup
+            $termHistory = new TermHistory($term, "edit");
+            $em->persist($termHistory);
+
             $em->persist($term);
             $em->flush();
 
