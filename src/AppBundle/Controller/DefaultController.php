@@ -13,7 +13,13 @@ class DefaultController extends Controller
      */
     public function homeAction()
     {
-        return $this->render('default/home.html.twig');
+        $wotdRepo = $this->getDoctrine()->getRepository("AppBundle:WordOfTheDay");
+        $wotd = $wotdRepo->findTodaysWord();
+        if (!$wotd){
+            $wotd = $this->get("word_of_the_day_generator")->generate();
+        }
+
+        return $this->render('default/home.html.twig', compact("wotd"));
     }
 
     /**

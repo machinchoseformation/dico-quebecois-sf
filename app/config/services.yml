@@ -4,6 +4,14 @@ parameters:
 #    parameter_name: value
 
 services:
+    word_of_the_day_generator:
+        class: AppBundle\Command\WordOfTheDayGenerator
+        arguments: ["@doctrine"]
+    word_of_the_day_generator_command:
+        class: AppBundle\Command\WordOfTheDayGeneratorCommand
+        arguments: ["@word_of_the_day_generator"]
+        tags:
+            -  { name: console.command }
 #    service_name:
 #        class: AppBundle\Directory\ClassName
 #        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]

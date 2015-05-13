@@ -12,4 +12,19 @@ use Doctrine\ORM\EntityRepository;
  */
 class TermRepository extends EntityRepository
 {
+
+    public function findAllQualityWordIds()
+    {
+        $qb = $this->createQueryBuilder("t")
+            ->select("t.id")
+            ->leftJoin("t.examples", "e")
+            ->groupBy("t")
+            ->having("COUNT(e) > 0");
+        $query = $qb->getQuery();
+
+        $arrayResult = $query->getScalarResult();
+        return $arrayResult;
+    }
+
+
 }

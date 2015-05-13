@@ -104,13 +104,13 @@ class Term extends AbstractTerm
     }
 
     /**
-     * Remove definitions
+     * Remove definition
      *
-     * @param \AppBundle\Entity\Definition $definitions
+     * @param \AppBundle\Entity\Definition $definition
      */
-    public function removeDefinition(\AppBundle\Entity\Definition $definitions)
+    public function removeDefinition(\AppBundle\Entity\Definition $definition)
     {
-        $this->definitions->removeElement($definitions);
+        $this->definitions->removeElement($definition);
     }
 
     /**

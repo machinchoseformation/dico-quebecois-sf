@@ -4,4 +4,7 @@
 
 {% block body %}
     <p>Bienvenue sur Wikébec.</p>
+    <h3>Mot du jour</h3>
+    <h4>{{ wotd.term.name }}</h4>
+    <p>{{ wotd.term.definitions[0].content }}</p>
 {% endblock %}
