@@ -17,6 +17,10 @@ class TermType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('email', 'email', array(
+                'label' => "Votre email",
+                'mapped' => false
+            ))
             ->add('name', null, array(
                 'label' => "Le nouveau terme"
             ))

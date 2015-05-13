@@ -42,8 +42,12 @@ class TermController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $deleteForm = $this->createForm(new DeleteTermType(), $term);
+        $deleteForm->get('email')->setData( $this->get('session')->get('email') );
+
         $deleteForm->handleRequest($request);
         if ($deleteForm->isValid()){
+
+            $this->get('session')->set('email', $deleteForm->get('email')->getData());
 
             $this->dispatchAlterationEvent($term, "delete");
 
@@ -78,8 +82,12 @@ class TermController extends Controller
         $term->addExample($emptyExample);
 
         $termForm = $this->createForm(new TermType(), $term);
+        $termForm->get('email')->setData( $this->get('session')->get('email') );
+
         $termForm->handleRequest($request);
         if ($termForm->isValid()){
+
+            $this->get('session')->set('email', $termForm->get('email')->getData());
 
             $this->dispatchAlterationEvent($term, "add");
 
@@ -116,8 +124,12 @@ class TermController extends Controller
         }
 
         $termForm = $this->createForm(new TermType(), $term);
+        $termForm->get('email')->setData( $this->get('session')->get('email') );
+
         $termForm->handleRequest($request);
         if ($termForm->isValid()){
+
+            $this->get('session')->set('email', $termForm->get('email')->getData());
 
             $this->dispatchAlterationEvent($term, "edit");
 

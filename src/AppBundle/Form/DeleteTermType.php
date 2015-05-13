@@ -16,6 +16,10 @@ class DeleteTermType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('email', 'email', array(
+                'label' => "Votre email",
+                'mapped' => false
+            ))
             ->add('recaptcha', 'ewz_recaptcha', array(
                 'mapped'      => false,
                 'constraints' => array(
