@@ -38,16 +38,16 @@ class TermHistory extends AbstractTerm
     /**
      * @var string
      *
-     * @ORM\Column(name="jsonDefinitions", type="object")
+     * @ORM\Column(name="serializedDefinitions", type="object")
      */
-    private $jsonDefinitions;
+    private $serializedDefinitions;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="jsonExamples", type="object")
+     * @ORM\Column(name="serializedExamples", type="object")
      */
-    private $jsonExamples;
+    private $serializedExamples;
 
 
     /**
@@ -72,8 +72,8 @@ class TermHistory extends AbstractTerm
         $this->setVotesCount( $term->getVotesCount() );
 
         $this->setBackupDate(new \DateTime());
-        $this->setJsonDefinitions( $term->getDefinitions() );
-        $this->setJsonExamples( $term->getExamples() );
+        $this->setSerializedDefinitions( $term->getDefinitions() );
+        $this->setSerializedExamples( $term->getExamples() );
         $this->setSerializedCategory( $term->getCategory() );
 
     }
@@ -136,48 +136,48 @@ class TermHistory extends AbstractTerm
     }
 
     /**
-     * Set jsonDefinitions
+     * Set serializedDefinitions
      *
-     * @param array $jsonDefinitions
+     * @param array $serializedDefinitions
      * @return TermHistory
      */
-    public function setJsonDefinitions($jsonDefinitions)
+    public function setSerializedDefinitions($serializedDefinitions)
     {
-        $this->jsonDefinitions = $jsonDefinitions;
+        $this->serializedDefinitions = $serializedDefinitions;
 
         return $this;
     }
 
     /**
-     * Get jsonDefinitions
+     * Get serializedDefinitions
      *
      * @return array 
      */
-    public function getJsonDefinitions()
+    public function getSerializedDefinitions()
     {
-        return $this->jsonDefinitions;
+        return $this->serializedDefinitions;
     }
 
     /**
-     * Set jsonExamples
+     * Set serializedExamples
      *
-     * @param array $jsonExamples
+     * @param array $serializedExamples
      * @return TermHistory
      */
-    public function setJsonExamples($jsonExamples)
+    public function setSerializedExamples($serializedExamples)
     {
-        $this->jsonExamples = $jsonExamples;
+        $this->serializedExamples = $serializedExamples;
 
         return $this;
     }
 
     /**
-     * Get jsonExamples
+     * Get serializedExamples
      *
      * @return array 
      */
-    public function getJsonExamples()
+    public function getSerializedExamples()
     {
-        return $this->jsonExamples;
+        return $this->serializedExamples;
     }
 }
