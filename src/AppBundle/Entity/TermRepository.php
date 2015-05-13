@@ -23,6 +23,18 @@ class TermRepository extends EntityRepository
         return $qb->getQuery()->getResult();
     }
 
+    public function findBestOf()
+    {
+        $qb = $this->createQueryBuilder("t")
+            ->select("t", "c", "d")
+            ->leftJoin("t.category", "c")
+            ->leftJoin("t.definitions", "d")
+            ->addOrderBy("t.votesCount", "DESC")
+            ->setMaxResults(30);
+
+        return $qb->getQuery()->getResult();
+    }
+
     public function findAllQualityWordIds()
     {
         $qb = $this->createQueryBuilder("t")

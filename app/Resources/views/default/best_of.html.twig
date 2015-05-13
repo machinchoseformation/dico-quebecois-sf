@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Wikébec | Dictionnaire de québécois participatif{% endblock %}
+
+{% block body %}
+    <h2>Coups de coeur des internautes !</h2>
+    {% for term in terms %}
+        <div>
+            <h3>{{ term.name|capitalize }} ({{ term.votesCount }} votes !)</h3>
+            <ol>
+            {% for def in term.definitions %}
+                <li>{{ def.content }}</li>
+            {% endfor %}
+            </ol>
+        </div>
+    {% endfor %}
+{% endblock %}

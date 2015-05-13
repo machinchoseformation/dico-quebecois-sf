@@ -23,6 +23,17 @@ class DefaultController extends Controller
     }
 
     /**
+     * @Route("/coups-de-coeur", name="bestOf")
+     */
+    public function bestOfAction()
+    {
+        $termRepo = $this->getDoctrine()->getRepository("AppBundle:Term");
+        $terms = $termRepo->findBestOf();
+        $params = array("terms" => $terms);
+        return $this->render('default/best_of.html.twig', $params);
+    }
+
+    /**
      * @Route("/dico", name="dico")
      */
     public function dicoAction()
