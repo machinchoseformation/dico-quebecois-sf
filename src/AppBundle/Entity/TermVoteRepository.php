@@ -12,4 +12,12 @@ use Doctrine\ORM\EntityRepository;
  */
 class TermVoteRepository extends EntityRepository
 {
+
+    public function findExisting($ip, $term)
+    {
+        return $this->findOneBy(array(
+            "ip" => $ip,
+            "term" => $term
+        ));
+    }
 }

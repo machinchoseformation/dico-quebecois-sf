@@ -9,6 +9,7 @@ use AppBundle\Entity\Term;
  * TermVote
  *
  * @ORM\Table()
+ * @ORM\HasLifeCycleCallbacks
  * @ORM\Entity(repositoryClass="AppBundle\Entity\TermVoteRepository")
  */
 class TermVote
@@ -43,6 +44,20 @@ class TermVote
      */
     private $term;
 
+
+    public function __construct($ip, Term $term)
+    {
+        $this->setIp($ip);
+        $this->setTerm($term);
+    }
+
+    /**
+     * @ORM\PrePersist()
+     */
+    public function prePersist()
+    {
+        $this->setDateCreated(new \DateTime());
+    }
 
     /**
      * Get id

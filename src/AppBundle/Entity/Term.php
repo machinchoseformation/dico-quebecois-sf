@@ -174,4 +174,10 @@ class Term extends AbstractTerm
         $this->category = $category;
     }
 
+
+    public function incrementVoteCount()
+    {
+        $this->setVotesCount( $this->getVotesCount() + 1 );
+    }
+
 }

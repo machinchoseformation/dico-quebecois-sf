@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Example;
 use AppBundle\Entity\Term;
 use AppBundle\Entity\Definition;
+use AppBundle\Entity\TermVote;
 use Cocur\Slugify\Slugify;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -130,5 +131,34 @@ class TermController extends Controller
             "termForm" => $termForm->createView()
         );
         return $this->render('term/edit_term.html.twig', $params);
+    }
+
+
+    /**
+     * @Route("vote/{id}", name="voteTerm")
+     */
+    public function voteTermAction(Request $request, Term $term)
+    {
+        $voteRepo = $this->getDoctrine()->getRepository("AppBundle:TermVote");
+
+        $ip = $request->getClientIp();
+
+        if ($voteRepo->findExisting($ip, $term)){
+            $this->addFlash("warning", "Vous avez déjà voté pour cette entrée !");
+        }
+        else {
+            $vote = new TermVote($ip, $term);
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($vote);
+
+            $term->incrementVoteCount();
+
+            $em->flush();
+
+            $this->addFlash("success", "Merci pour votre vote !");
+        }
+
+        return $this->redirectToRoute("showTerm", array("slug" => $term->getSlug()));
     }
 } 
