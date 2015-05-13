@@ -1,5 +1,17 @@
-<ol class="list-unstyled" id="dico">
-{% for term in dico %}
-    <li><a data-cat="{{ term.category.name[:1]|lower }}" href="{{ path('showTerm', {'slug':term.slug}) }}" title="{{ term.name }} | Défintion">{{ term.name|capitalize }}</a></li>
-{% endfor %}
-</ol>
+<h4>Le dictionnaire :</h4>
+<div class="pre-scrollable">
+    <ol class="list-unstyled" id="dico">
+    {% for term in dico %}
+        <li data-cat="{{ term.category.name[:1]|lower }}"><a href="{{ path('showTerm', {'slug':term.slug}) }}" title="{{ term.name }} | Défintion">{{ term.name|capitalize }}</a></li>
+    {% endfor %}
+    </ol>
+</div>
+<h4>Filtrer !</h4>
+<input type="text" id="filter_input" val="" />
+<h5>Catégories :</h5>
+<div id="cat_checkboxes">
+    <input type="checkbox" id="cat_v" value="v" checked /><label for="cat_v">Vocabulaire</label><br />
+    <input type="checkbox" id="cat_s" value="s" checked /><label for="cat_s">Sacres</label><br />
+    <input type="checkbox" id="cat_d" value="d" checked /><label for="cat_d">Déformations</label><br />
+    <input type="checkbox" id="cat_e" value="e" checked /><label for="cat_e">Expressions</label>
+</div>

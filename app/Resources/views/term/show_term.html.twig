@@ -43,7 +43,7 @@
 
     <div class="votesCount">{{ term.votesCount }} votes pour cette entrée !</div>
 
-    <a href="{{ path('editTerm', {'slug':term.slug}) }}" class="btn btn-warning" title="Modifier le terme {{ term.name }}">Modifier ce terme</a>
-    <a href="{{ path('deleteTerm', {'slug':term.slug}) }}" class="btn btn-danger" title="Effacer le terme {{ term.name }}">Effacer ce terme</a>
-    <a href="{{ path('voteTerm', {'id':term.id}) }}" class="btn btn-success" title="Voter pour le terme {{ term.name }}">Voter pour ce terme</a>
+    <a href="{{ path('editTerm', {'slug':term.slug}) }}" class="btn btn-info" title="Modifier le terme {{ term.name }}"><span class="glyphicon glyphicon-pencil"></span> Modifier ce terme</a>
+    <a href="{{ path('deleteTerm', {'slug':term.slug}) }}" class="btn btn-danger" title="Effacer le terme {{ term.name }}"><span class="glyphicon glyphicon-remove"></span> Effacer ce terme</a>
+    <a href="{{ path('voteTerm', {'id':term.id}) }}" class="btn btn-success" title="Voter pour le terme {{ term.name }}"><span class="glyphicon glyphicon-thumbs-up"></span> Voter pour ce terme</a>
 {% endblock %}

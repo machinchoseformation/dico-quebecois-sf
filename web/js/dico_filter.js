@@ -12,3 +12,12 @@ $("#filter_input").on("keyup", function(){
         $(this).not(":containsNoCase(" + filterVal + ")").parent().hide();
     });
 });
+
+$("#cat_checkboxes input").on("change", function(){
+    if ($(this).is(":checked")){
+        $("#dico li[data-cat='"+$(this).val()+"']").show();
+    }
+    else {
+        $("#dico li[data-cat='"+$(this).val()+"']").hide();
+    }
+});
