@@ -28,7 +28,7 @@ class DefaultController extends Controller
     public function dicoAction()
     {
         $termRepo = $this->getDoctrine()->getRepository("AppBundle:Term");
-        $dico = $termRepo->findBy(array(), array("name" => "ASC"));
+        $dico = $termRepo->findAllWithCategory();
         $params = array("dico" => $dico);
         return $this->render('default/dico.html.twig', $params);
     }

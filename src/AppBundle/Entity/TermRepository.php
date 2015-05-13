@@ -13,6 +13,16 @@ use Doctrine\ORM\EntityRepository;
 class TermRepository extends EntityRepository
 {
 
+    public function findAllWithCategory()
+    {
+        $qb = $this->createQueryBuilder("t")
+                ->select("t", "c")
+                ->leftJoin("t.category", "c")
+                ->addOrderBy("t.name", "ASC");
+
+        return $qb->getQuery()->getResult();
+    }
+
     public function findAllQualityWordIds()
     {
         $qb = $this->createQueryBuilder("t")

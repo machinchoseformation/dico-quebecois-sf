@@ -10,10 +10,12 @@ class TermAlterationListener
 {
 
     protected $doctrine;
+    protected $adminNotifier;
 
-    public function __construct($doctrine)
+    public function __construct($doctrine, $adminNotifier)
     {
         $this->doctrine = $doctrine;
+        $this->adminNotifier = $adminNotifier;
     }
 
     public function onTermAlteration(TermAlterationEvent $event)
@@ -35,5 +37,8 @@ class TermAlterationListener
             $termHistory = new TermHistory($term, $type);
             $em->persist($termHistory);
         }
+
+        //send a notification
+        $this->adminNotifier->sendTermAlterationNotification($term, $type);
     }
 }

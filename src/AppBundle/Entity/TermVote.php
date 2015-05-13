@@ -40,7 +40,7 @@ class TermVote
     /**
      * @var Term
      *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Term")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Term", inversedBy="votes")
      */
     private $term;
 

@@ -12,6 +12,10 @@ services:
 
     term_alteration_listener:
         class: AppBundle\EventListener\TermAlterationListener
-        arguments: ["@doctrine"]
+        arguments: ["@doctrine", "@admin_notifier"]
         tags:
             - { name: kernel.event_listener, event: term_alteration, method: onTermAlteration }
+
+    admin_notifier:
+        class: AppBundle\Mailer\AdminNotifier
+        arguments: ["@mailer", "@templating"]

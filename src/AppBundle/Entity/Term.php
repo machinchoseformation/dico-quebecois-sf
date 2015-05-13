@@ -41,6 +41,13 @@ class Term extends AbstractTerm
     private $category;
 
     /**
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="TermVote", mappedBy="term", cascade={"remove"})
+     */
+    private $votes;
+
+    /**
      * @Assert\Callback()
      */
     public function validateDefinitions(ExecutionContextInterface $context)
@@ -181,4 +188,37 @@ class Term extends AbstractTerm
         $this->setVotesCount( $this->getVotesCount() + 1 );
     }
 
+
+    /**
+     * Add votes
+     *
+     * @param \AppBundle\Entity\TermVote $votes
+     * @return Term
+     */
+    public function addVote(\AppBundle\Entity\TermVote $votes)
+    {
+        $this->votes[] = $votes;
+
+        return $this;
+    }
+
+    /**
+     * Remove votes
+     *
+     * @param \AppBundle\Entity\TermVote $votes
+     */
+    public function removeVote(\AppBundle\Entity\TermVote $votes)
+    {
+        $this->votes->removeElement($votes);
+    }
+
+    /**
+     * Get votes
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getVotes()
+    {
+        return $this->votes;
+    }
 }

@@ -51,7 +51,7 @@ class TermController extends Controller
             $em->flush();
 
             $this->addFlash('success', 'Terme effacé !');
-            return $this->redirectToRoute('home');
+            //return $this->redirectToRoute('home');
         }
 
         $params = array(
