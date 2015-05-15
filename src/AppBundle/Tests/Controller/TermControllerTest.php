@@ -28,7 +28,7 @@ class TermControllerTest extends WebTestCase
             $showTermPageCrawler = $client->click($link);
 
             $termName = $node->text();
-            fwrite(STDERR, print_r($showTermPageCrawler->filter('h1')->text(), TRUE));;
+            //fwrite(STDERR, print_r($showTermPageCrawler->filter('h1')->text(), TRUE));;
 
             $this->assertEquals(200, $client->getResponse()->getStatusCode());
             $this->assertEquals($termName, $showTermPageCrawler->filter('h1')->text());
