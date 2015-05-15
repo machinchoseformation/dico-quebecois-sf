@@ -5,10 +5,8 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Example;
 use AppBundle\Entity\Term;
 use AppBundle\Entity\Definition;
-use AppBundle\Entity\TermHistory;
 use AppBundle\Entity\TermVote;
 use AppBundle\Event\TermAlterationEvent;
-use Cocur\Slugify\Slugify;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -26,6 +24,8 @@ class TermController extends Controller
 {
 
     /**
+     * Show term details page
+     *
      * @Route("/{slug}/definition", name="showTerm")
      */
     public function showTermAction(Term $term)
@@ -35,6 +35,8 @@ class TermController extends Controller
 
 
     /**
+     * Deletes a term
+     *
      * @Route("/terme/suppression/{slug}", name="deleteTerm")
      */
     public function deleteTerm(Request $request, Term $term)
@@ -42,13 +44,17 @@ class TermController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $deleteForm = $this->createForm(new DeleteTermType(), $term);
+
+        //prefill the email in the form if stored in session
         $deleteForm->get('email')->setData( $this->get('session')->get('email') );
 
         $deleteForm->handleRequest($request);
         if ($deleteForm->isValid()){
 
+            //store the email in session to prefill next form
             $this->get('session')->set('email', $deleteForm->get('email')->getData());
 
+            //dispatch a term alteration event, type delete
             $this->dispatchAlterationEvent($term, "delete");
 
             $em->remove($term);
@@ -67,34 +73,44 @@ class TermController extends Controller
 
 
     /**
+     * Shows and handles the add term form
+     *
      * @Route("/terme/ajout", name="addTerm")
      */
     public function addTermAction(Request $request)
     {
-        $termRepo = $this->getDoctrine()->getRepository("AppBundle:Term");
         $em = $this->getDoctrine()->getManager();
 
         $term = new Term();
+
+        //so that we see a definition field automatically
         $emptyDefinition = new Definition();
         $term->addDefinition($emptyDefinition);
 
+        //same for example
         $emptyExample = new Example();
         $term->addExample($emptyExample);
 
         $termForm = $this->createForm(new TermType(), $term);
+
+        //prefill the email in form if stored in session
         $termForm->get('email')->setData( $this->get('session')->get('email') );
 
         $termForm->handleRequest($request);
         if ($termForm->isValid()){
 
+            //store the email in session for later use
             $this->get('session')->set('email', $termForm->get('email')->getData());
 
+            //dispatch term alteration event, type add
             $this->dispatchAlterationEvent($term, "add");
 
             $em->persist($term);
             $em->flush();
 
             $this->addFlash('success', 'Nouveau terme enregistré !');
+
+            //redirect on the newly added term
             return $this->redirectToRoute('showTerm', array('slug' => $term->getSlug()));
         }
 
@@ -105,6 +121,8 @@ class TermController extends Controller
     }
 
     /**
+     * Shows the edit term page and handles the form
+     *
      * @Route("/terme/modification/{slug}", name="editTerm")
      */
     public function editTermAction(Request $request, Term $term)
@@ -124,13 +142,17 @@ class TermController extends Controller
         }
 
         $termForm = $this->createForm(new TermType(), $term);
+
+        //prefill the email
         $termForm->get('email')->setData( $this->get('session')->get('email') );
 
         $termForm->handleRequest($request);
         if ($termForm->isValid()){
 
+            //store the email in session
             $this->get('session')->set('email', $termForm->get('email')->getData());
 
+            //dispatch term edit event
             $this->dispatchAlterationEvent($term, "edit");
 
             $em->persist($term);
@@ -149,6 +171,9 @@ class TermController extends Controller
 
 
     /**
+     * Register the vote
+     * @todo ajax request insted of http
+     *
      * @Route("vote/{id}", name="voteTerm")
      */
     public function voteTermAction(Request $request, Term $term)
@@ -166,8 +191,10 @@ class TermController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($vote);
 
+            //could have been automatized, but hey
             $term->incrementVoteCount();
 
+            //saves the vote and the term
             $em->flush();
 
             $this->addFlash("success", "Merci pour votre vote !");
@@ -176,7 +203,15 @@ class TermController extends Controller
         return $this->redirectToRoute("showTerm", array("slug" => $term->getSlug()));
     }
 
-    protected function dispatchAlterationEvent($term, $type)
+    /**
+     * Dispatch a term alteration event
+     *
+     * Just to dry some code
+     *
+     * @param $term
+     * @param $type
+     */
+    protected function dispatchAlterationEvent(Term $term, $type)
     {
         $termAlterationEvent = new TermAlterationEvent($term, $type);
         $eventDispatcher = $this->get('event_dispatcher');
