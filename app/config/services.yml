@@ -1,21 +1,25 @@
 services:
 
+    #generates a new word of the day, and saves it
     word_of_the_day_generator:
         class: AppBundle\Command\WordOfTheDayGenerator
         arguments: ["@doctrine"]
 
+    #define a new command used to generate a word of the day
     word_of_the_day_generator_command:
         class: AppBundle\Command\WordOfTheDayGeneratorCommand
         arguments: ["@word_of_the_day_generator"]
         tags:
             -  { name: console.command }
 
+    #event listener on all terms modifications
     term_alteration_listener:
         class: AppBundle\EventListener\TermAlterationListener
         arguments: ["@doctrine", "@admin_notifier", "@request_stack", "@session"]
         tags:
             - { name: kernel.event_listener, event: term_alteration, method: onTermAlteration }
 
+    #send email to admins
     admin_notifier:
         class: AppBundle\Mailer\AdminNotifier
         arguments: ["@mailer", "@templating"]
