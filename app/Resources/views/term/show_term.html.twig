@@ -3,47 +3,53 @@
 {% block title %}{{ term.name|capitalize }} | Définition | Wikébec{% endblock %}
 
 {% block body %}
-    <h1>{{ term.name|capitalize }}</h1>
-    <p>
-        {# the dashes remove extra whitespace #}
-        {{- term.category.name -}}
-        {%- if term.nature -%}, {{ term.nature }}{%- endif -%}
-        {%- if term.gender -%}, {{ term.gender }}{%- endif -%}
-        {%- if term.number -%}, {{ term.number }}{%- endif -%}
-    </p>
+    <div class="row">
+        <div class="col-xs-8">
+            <h1>{{ term.name|capitalize }}</h1>
+            <p>
+                {# the dashes remove extra whitespace #}
+                {{- term.category.name -}}
+                {%- if term.nature -%}, {{ term.nature }}{%- endif -%}
+                {%- if term.gender -%}, {{ term.gender }}{%- endif -%}
+                {%- if term.number -%}, {{ term.number }}{%- endif -%}
+            </p>
 
-    <h3>Définitions</h3>
-    <ol>
-    {% for def in term.definitions %}
-        <li>{{ def.content }}</li>
-    {% endfor %}
-    </ol>
+            <h4>Définitions</h4>
+            <ol>
+            {% for def in term.definitions %}
+                <li>{{ def.content }}</li>
+            {% endfor %}
+            </ol>
 
-    <h3>Exemples</h3>
-    <ol>
-        {% for example in term.examples %}
-            <li>{{ example.content }} : {{ example.translation }}</li>
-        {% endfor %}
-    </ol>
+            <h4>Exemples</h4>
+            <ol>
+                {% for example in term.examples %}
+                    <li>{{ example.content }} : {{ example.translation }}</li>
+                {% endfor %}
+            </ol>
 
-    {% if term.pronunciation %}
-    <h3>Prononciation</h3>
-    <p>{{ term.pronunciation }}</p>
-    {% endif %}
+            {% if term.pronunciation %}
+            <h4>Prononciation</h4>
+            <p>{{ term.pronunciation }}</p>
+            {% endif %}
 
-    {% if term.variations %}
-    <h3>Variantes sur le thème</h3>
-    <p>{{ term.variations }}</p>
-    {% endif %}
+            {% if term.variations %}
+            <h4>Variantes sur le thème</h4>
+            <p>{{ term.variations }}</p>
+            {% endif %}
 
-    {% if term.origin %}
-    <h3>Origine</h3>
-    <p>{{ term.origin }}</p>
-    {% endif %}
+            {% if term.origin %}
+            <h4>Origine</h4>
+            <p>{{ term.origin }}</p>
+            {% endif %}
 
-    <div class="votesCount">{{ term.votesCount }} votes pour cette entrée !</div>
-
-    <a href="{{ path('editTerm', {'slug':term.slug}) }}" class="btn btn-info" title="Modifier le terme {{ term.name }}"><span class="glyphicon glyphicon-pencil"></span> Modifier ce terme</a>
-    <a href="{{ path('deleteTerm', {'slug':term.slug}) }}" class="btn btn-danger" title="Effacer le terme {{ term.name }}"><span class="glyphicon glyphicon-remove"></span> Effacer ce terme</a>
-    <a href="{{ path('voteTerm', {'id':term.id}) }}" class="btn btn-success" title="Voter pour le terme {{ term.name }}"><span class="glyphicon glyphicon-thumbs-up"></span> Voter pour ce terme</a>
+            <div class="votesCount">{{ term.votesCount }} vote{{ (term.votesCount > 1) ? "s" }} pour cette entrée !</div>
+        </div>
+        <div class="col-xs-4">
+            <h3>Participez !</h3>
+            <p><a href="{{ path('editTerm', {'slug':term.slug}) }}" class="btn btn-info" title="Modifier le terme {{ term.name }}"><span class="glyphicon glyphicon-pencil"></span> Modifier ce terme</a></p>
+            <p><a href="{{ path('deleteTerm', {'slug':term.slug}) }}" class="btn btn-danger" title="Effacer le terme {{ term.name }}"><span class="glyphicon glyphicon-remove"></span> Effacer ce terme</a></p>
+            <p><a href="{{ path('voteTerm', {'id':term.id}) }}" class="btn btn-success" title="Voter pour le terme {{ term.name }}"><span class="glyphicon glyphicon-thumbs-up"></span> Voter pour ce terme</a></p>
+        </div>
+    </div>
 {% endblock %}
