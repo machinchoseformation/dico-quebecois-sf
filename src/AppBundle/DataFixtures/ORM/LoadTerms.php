@@ -15,7 +15,6 @@ class LoadTerms implements FixtureInterface
 
     private $em;
 
-
     /**
      * {@inheritDoc}
      */
@@ -102,7 +101,7 @@ class LoadTerms implements FixtureInterface
                     $term->addExample($example);
                 }
 
-
+                //saves it
                 $em->persist($term);
             }
             $em->flush();
@@ -110,8 +109,13 @@ class LoadTerms implements FixtureInterface
         }
     }
 
-
-    private function addDefinitionToTerm($content, $term)
+    /**
+     * Adds a definition to a term
+     *
+     * @param $content
+     * @param Term $term
+     */
+    private function addDefinitionToTerm($content, Term $term)
     {
         $def = new Definition();
         $def->setContent( $content );
@@ -122,6 +126,11 @@ class LoadTerms implements FixtureInterface
         $term->addDefinition($def);
     }
 
+    /**
+     * Creates all categories, and return an array containing refs
+     *
+     * @return array
+     */
     private function createCategories()
     {
 
