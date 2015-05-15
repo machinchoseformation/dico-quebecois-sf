@@ -8,7 +8,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
- * Term
+ * Base class for Term and for TermHistory
  *
  * @UniqueEntity("slug")
  * @UniqueEntity("name")
@@ -98,6 +98,8 @@ abstract class AbstractTerm
     private $modifiedDate;
 
     /**
+     * Stores the vote count here for performance (to avoid rows count)
+     *
      * @var integer
      *
      * @ORM\Column(name="votesCount", type="integer")

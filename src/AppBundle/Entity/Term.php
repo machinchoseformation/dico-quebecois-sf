@@ -10,7 +10,7 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 use AppBundle\Entity\TermHistory;
 
 /**
- * Term
+ * Term is extending AbstractTerm
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="AppBundle\Entity\TermRepository")
@@ -48,18 +48,23 @@ class Term extends AbstractTerm
     private $votes;
 
     /**
+     * This will be called every time we validate a Term
+     *
      * @Assert\Callback()
      */
     public function validateDefinitions(ExecutionContextInterface $context)
     {
         //remove empty definitions first
+        //looks weird here
         foreach($this->getDefinitions() as $def){
             if ($def->getContent() == ""){
                 $this->removeDefinition($def);
             }
         }
 
+        //if there are no definitions left...
         if (count($this->getDefinitions()) < 1){
+            //creates a validation error
             $context->buildViolation('Veuillez ajouter au moins une définition !')
                 ->atPath('definitions')
                 ->addViolation();
@@ -68,6 +73,8 @@ class Term extends AbstractTerm
 
 
     /**
+     * See above
+     *
      * @Assert\Callback()
      */
     public function validateExamples(ExecutionContextInterface $context)
@@ -182,7 +189,9 @@ class Term extends AbstractTerm
         $this->category = $category;
     }
 
-
+    /**
+     * Add 1 to the current vote count
+     */
     public function incrementVoteCount()
     {
         $this->setVotesCount( $this->getVotesCount() + 1 );

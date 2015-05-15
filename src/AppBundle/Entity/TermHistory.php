@@ -6,7 +6,10 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Term
+ * TermHistory
+ *
+ * The relations are stored directly as an object in db to simplify data structure.
+ * Not sure about this.
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="AppBundle\Entity\TermRepository")
@@ -69,11 +72,10 @@ class TermHistory extends AbstractTerm
      */
     public function __construct(Term $term, $type = null)
     {
-
+        //edit or delete
         $this->setType($type);
 
-
-        //not elegant, but casting with inheritance is a bitch
+        //very ugly, but casting with inheritance is a bitch, and no time
         $this->setName( $term->getName() );
         $this->setSlug( $term->getSlug() );
         $this->setVariations( $term->getVariations() );

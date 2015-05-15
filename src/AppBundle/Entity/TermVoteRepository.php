@@ -13,7 +13,14 @@ use Doctrine\ORM\EntityRepository;
 class TermVoteRepository extends EntityRepository
 {
 
-    public function findExisting($ip, $term)
+    /**
+     * Find a vote based on ip and Term
+     *
+     * @param $ip
+     * @param Term $term
+     * @return null|object
+     */
+    public function findExisting($ip, Term $term)
     {
         return $this->findOneBy(array(
             "ip" => $ip,

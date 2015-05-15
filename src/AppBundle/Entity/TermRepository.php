@@ -13,6 +13,12 @@ use Doctrine\ORM\EntityRepository;
 class TermRepository extends EntityRepository
 {
 
+    /**
+     * Mainly used to generate the complete word lists
+     * @todo cache this query result
+     *
+     * @return array
+     */
     public function findAllWithCategory()
     {
         $qb = $this->createQueryBuilder("t")
@@ -23,6 +29,12 @@ class TermRepository extends EntityRepository
         return $qb->getQuery()->getResult();
     }
 
+    /**
+     * Finds the 30 terms with most votes
+     * @todo move $maxResults in method arguments
+     *
+     * @return array
+     */
     public function findBestOf()
     {
         $qb = $this->createQueryBuilder("t")
@@ -35,6 +47,15 @@ class TermRepository extends EntityRepository
         return $qb->getQuery()->getResult();
     }
 
+    /**
+     * Gets an array of terms id having at least one example.
+     *
+     * Used for word of the day generation
+     *
+     * @todo better filtering of quality (on votes, on definition number, etc.)
+     *
+     * @return array
+     */
     public function findAllQualityWordIds()
     {
         $qb = $this->createQueryBuilder("t")

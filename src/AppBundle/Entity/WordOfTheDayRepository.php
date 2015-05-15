@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
+use AppBundle\Entity\WordOfTheDay;
 
 /**
  * WordOfTheDayRepository
@@ -13,6 +14,12 @@ use Doctrine\ORM\EntityRepository;
 class WordOfTheDayRepository extends EntityRepository
 {
 
+    /**
+     * find the word of the day to display today
+     *
+     * @return null|WordOfTheDay
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
     public function findTodaysWord()
     {
         $qb = $this->createQueryBuilder("w")

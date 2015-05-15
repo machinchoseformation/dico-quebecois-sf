@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use AppBundle\Entity\Term;
 
 /**
- * TermVote
+ * TermVote, stored mainly to avoid duplicates votes on same term
  *
  * @ORM\Table()
  * @ORM\HasLifeCycleCallbacks

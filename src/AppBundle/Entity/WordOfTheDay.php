@@ -5,7 +5,7 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * WordOfTheDay
+ * WordOfTheDay contains a relation to a Term, and the date on which this word will be displayed.
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="AppBundle\Entity\WordOfTheDayRepository")
