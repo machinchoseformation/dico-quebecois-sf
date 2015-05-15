@@ -18,10 +18,20 @@ class TermAlterationListener
     {
         $this->doctrine = $doctrine;
         $this->adminNotifier = $adminNotifier;
+
+        //this is the way to get the request in a service (request stack)
         $this->request = $request_stack->getCurrentRequest();
+
         $this->session = $session;
     }
 
+    /**
+     * Called on create, update and delete of a term
+     *
+     * Sets a slug when needed, save a backup when needed, and sends admin notification
+     *
+     * @param TermAlterationEvent $event
+     */
     public function onTermAlteration(TermAlterationEvent $event)
     {
 
@@ -30,12 +40,14 @@ class TermAlterationListener
         $term = $event->getTerm();
         $type = $event->getType();
 
+        //slug on add and edit
         if ($type == "add" || $type == "edit"){
             $slugify = new Slugify();
             $slug = $slugify->slugify($term->getName());
             $term->setSlug( $slug );
         }
 
+        //backup on edit and delete
         if ($type == "edit" || $type == "delete") {
             //backup
             $termHistory = new TermHistory($term, $type);
@@ -44,7 +56,7 @@ class TermAlterationListener
             $em->persist($termHistory);
         }
 
-        //send a notification
+        //sends a notification on every alteration
         $this->adminNotifier->sendTermAlterationNotification($term, $type);
     }
 }

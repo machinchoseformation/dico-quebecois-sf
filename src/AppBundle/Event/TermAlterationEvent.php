@@ -5,6 +5,14 @@
     use Symfony\Component\EventDispatcher\Event;
     use AppBundle\Entity\Term;
 
+    /**
+     * Simple Event holding info about the term, and the alteration type
+     *
+     * See AppBundle\EvenLIstener\TermAlterationListener
+     *
+     * Class TermAlterationEvent
+     * @package AppBundle\Event
+     */
     class TermAlterationEvent extends Event
     {
         protected $term;
