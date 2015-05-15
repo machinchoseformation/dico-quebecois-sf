@@ -172,7 +172,7 @@ class TermController extends Controller
 
     /**
      * Register the vote
-     * @todo ajax request insted of http
+     * @todo ajax request instead of http
      *
      * @Route("vote/{id}", name="voteTerm")
      */
@@ -208,7 +208,7 @@ class TermController extends Controller
      *
      * Just to dry some code
      *
-     * @param $term
+     * @param Term $term
      * @param $type
      */
     protected function dispatchAlterationEvent(Term $term, $type)

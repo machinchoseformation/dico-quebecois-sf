@@ -3,5 +3,6 @@
 {% block title %}Modifier le terme {{ term.name }} | Wikébec{% endblock %}
 
 {% block body %}
+    <h2>Modifier "{{ term.name }}"</h2>
     {{ form(termForm, {attr:{'novalidate':'novalidate'}}) }}
 {% endblock %}
