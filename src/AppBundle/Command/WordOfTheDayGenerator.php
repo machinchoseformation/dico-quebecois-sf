@@ -8,12 +8,19 @@ class WordOfTheDayGenerator
 {
     protected $doctrine;
 
+    /**
+     * Called by the service container
+     *
+     * @param $doctrine
+     */
     public function __construct($doctrine)
     {
         $this->doctrine = $doctrine;
     }
 
     /**
+     * Generates a new Word of the Day, and returns it.
+     *
      * @return WordOfTheDay
      */
     public function generate()
@@ -21,7 +28,7 @@ class WordOfTheDayGenerator
 
         $wotdRepo = $this->doctrine->getRepository("AppBundle:WordOfTheDay");
 
-        //avoid duplicates
+        //avoid duplicates (if the word has already been generated for today...)
         $alreadyThere = $wotdRepo->findTodaysWord();
         if ($alreadyThere){
             return;
@@ -31,12 +38,12 @@ class WordOfTheDayGenerator
         $termRepo = $this->doctrine->getRepository("AppBundle:Term");
         $qualityIds = $termRepo->findAllQualityWordIds();
 
-
         //@todo: check in previous wotds to avoid having the same one multiple times
-
 
         //randomize
         shuffle($qualityIds);
+
+        //get the last id
         $id = array_pop($qualityIds)["id"];
 
         //retrieve the term
